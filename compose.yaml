@@ -1,0 +1,46 @@
+services:
+  postgres-cine-dev:
+    # se define la imagen de postgres a utilizar
+    build:
+      context: ./postgres-dev
+      dockerfile: Dockerfile.dev
+    image: img-postgres-cine-dev:1.0.0
+    container_name: postgres-cine-dev
+    ports:
+      - "127.0.0.1:5134:5432"
+    volumes:
+      - ./postgres-dev/data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: 'us_app_cine'
+      POSTGRES_PASSWORD: 'Dip-AwFs-20261024'
+      POSTGRES_DB: 'db_cine'
+    healthcheck:
+      test: ["cmd-shell", "pg_isready -U us_app_cine -d db_cine"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - db_network_cine
+
+  api-cine-dev:
+		# parametros donde se especifica el contexto de construcción y el nombre del archivo Dockerfile
+    build:
+      context: ./api-cine-dip
+      dockerfile: Dockerfile.dev
+    images: api-cine-dev:1.0
+		# se define el nombre del contenedor
+    container_name: api-cine-dev
+		# definimos que se expondra el puerto 3000 del contenedor al puerto 3001 de la máquina host
+    ports:
+      - '3001:3000'
+		# montamos el directorio actual en el contenedor y excluimos la carpeta node_modules para evitar conflictos
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - db_network_cine
+
+networks:
+  db_network_cine:
+    driver: bridge
+    name: db_network_cine
