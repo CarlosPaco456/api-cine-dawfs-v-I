@@ -2,7 +2,7 @@ name: CI api cine
 
 on:
   push:
-  branches: [master]
+    branches: [master]
 
 env:
   IMAGEN: ${{ secrets.DOCKER_USERNAME }}/api-cine:${{ github.sha }}
