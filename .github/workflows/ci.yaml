@@ -22,3 +22,6 @@ jobs:
 
       - name: instalar-dependenciar
         run: npm ci
+
+      - name: ejecucion-pruebas
+        run: npm test
