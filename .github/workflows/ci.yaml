@@ -43,5 +43,5 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: push-a-docker
-        run: docker push "$IMAGEN"
-        run: echo "imagen subida a docker hub"
+        run: docker push "$IMAGEN" |
+          echo "imagen subida a docker hub"
