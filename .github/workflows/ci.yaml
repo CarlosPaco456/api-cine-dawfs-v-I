@@ -44,3 +44,4 @@ jobs:
 
       - name: push-a-docker
         run: docker push "$IMAGEN"
+        run: echo "imagen subida a docker hub"
